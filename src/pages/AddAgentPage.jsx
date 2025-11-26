@@ -6,14 +6,15 @@ import {
   VStack,
   FormLabel,
   Checkbox,
+  Select,
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
+import servers from "../servers/serverList.json"; // import JSON file
 
 const AddAgentPage = () => {
   const toast = useToast();
-
   const [serverUrl, setServerUrl] = useState("");
   const [agentData, setAgentData] = useState({
     agentId: "",
@@ -37,10 +38,9 @@ const AddAgentPage = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(agentData);
     if (!serverUrl) {
       toast({
-        description: "Please enter a server URL",
+        description: "Please select a server",
         status: "error",
         duration: 3000,
       });
@@ -48,7 +48,12 @@ const AddAgentPage = () => {
     }
 
     try {
-      await axios.post(serverUrl, agentData);
+      const serverPath = `${serverUrl.replace(
+        /\/$/,
+        ""
+      )}/api/sysadmin/register`;
+      console.log(serverPath);
+      await axios.post(serverPath, agentData);
       toast({
         description: "Agent submitted successfully",
         status: "success",
@@ -78,12 +83,18 @@ const AddAgentPage = () => {
     <Flex direction="column" p={4}>
       <VStack spacing={4} align="stretch" maxW="600px">
         <Box>
-          <FormLabel>Server URL</FormLabel>
-          <Input
-            placeholder="Enter server URL"
+          <FormLabel>Server</FormLabel>
+          <Select
+            placeholder="Select a server"
             value={serverUrl}
             onChange={(e) => setServerUrl(e.target.value)}
-          />
+          >
+            {servers.map((server) => (
+              <option key={server.url} value={server.url}>
+                {server.name}
+              </option>
+            ))}
+          </Select>
         </Box>
 
         <Box>

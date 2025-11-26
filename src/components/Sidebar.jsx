@@ -1,11 +1,14 @@
 import { Box, VStack, Button, useColorModeValue } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
+  const location = useLocation();
   const sidebarBg = useColorModeValue("#2563EB", "#224196ff");
   const buttonBg = useColorModeValue("white", "whiteAlpha.400");
   const buttonColor = useColorModeValue("#1E40AF", "white");
   const buttonHover = useColorModeValue("gray.100", "whiteAlpha.300");
+  const activeBg = useColorModeValue("gray.400", "whiteAlpha.500");
+  const activeColor = useColorModeValue("#1E40AF", "#1E40AF");
 
   return (
     <Box
@@ -23,8 +26,12 @@ const Sidebar = () => {
         <Link to="/SiriusAdminAdd">
           <Button
             w="100%"
-            bg={buttonBg}
-            color={buttonColor}
+            bg={location.pathname === "/SiriusAdminAdd" ? activeBg : buttonBg}
+            color={
+              location.pathname === "/SiriusAdminAdd"
+                ? activeColor
+                : buttonColor
+            }
             _hover={{ bg: buttonHover }}
           >
             Add Agents
@@ -34,8 +41,14 @@ const Sidebar = () => {
         <Link to="/SiriusAdminDelete">
           <Button
             w="100%"
-            bg={buttonBg}
-            color={buttonColor}
+            bg={
+              location.pathname === "/SiriusAdminDelete" ? activeBg : buttonBg
+            }
+            color={
+              location.pathname === "/SiriusAdminDelete"
+                ? activeColor
+                : buttonColor
+            }
             _hover={{ bg: buttonHover }}
           >
             Delete Agents
