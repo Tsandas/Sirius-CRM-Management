@@ -26,7 +26,7 @@ const LoadingScreen = ({ isVisible }) => {
           zIndex={2000}
         >
           <Image
-            src="../../public/sirius.png"
+            src="/sirius.png"
             alt="Sirius Logo"
             boxSize="400px"
             objectFit="contain"
