@@ -73,7 +73,7 @@ const AddAgentPage = () => {
       });
     } catch (err) {
       const errorMessage =
-        err.response?.data?.error?.details || "Something went wrong";
+        err.response?.data?.error?.message || "Something went wrong";
       toast({ description: errorMessage, status: "error", duration: 3000 });
       console.error(err);
     }
